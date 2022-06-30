@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion, ConnectionCheckOutStartedEvent, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion, ConnectionCheckOutStartedEvent, ObjectId, CURSOR_FLAGS } = require('mongodb');
 const express = require('express');
 const app=express()
 const cors = require('cors');
@@ -53,6 +53,14 @@ async function run(){
             const query={_id:ObjectId(id)}
             const result=await taskCollection.deleteOne(query);
             res.send(result)
+        })
+
+        // total completed task
+        app.get('/totalCompleted', async(req,res)=>{
+            const query={}
+            const result=taskCollection.find(query)
+            const count=await result.count();
+            res.send({count})
         })
         
 
