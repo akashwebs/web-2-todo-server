@@ -30,7 +30,7 @@ async function run(){
             res.send(result)
         })
         app.get('/compeltetask',async(req,res)=>{
-            const query=req.query.hello
+            
             const result=await taskCollection.find({isCompelete:true}).toArray()
             res.send(result)
         })
