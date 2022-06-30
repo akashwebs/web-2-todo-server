@@ -55,13 +55,7 @@ async function run(){
             res.send(result)
         })
 
-        // total completed task
-        app.get('/totalCompleted', async(req,res)=>{
-            const query={}
-           
-            const count=await taskCollection.estimatedDocumentCount({query});
-            res.send({count})
-        })
+       
         
 
     }finally{
