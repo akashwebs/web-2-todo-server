@@ -19,6 +19,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
     try{
         const taskCollection = client.db("todo").collection("tasks");
+        const eventCollection = client.db("todo").collection("event");
 
         app.post('/addTask',async(req,res)=>{
            const task=req.body;
@@ -55,8 +56,18 @@ async function run(){
             res.send(result)
         })
 
-       
-        
+    //    for event 
+    app.post('/events',async(req,res)=>{
+        const events=req.body;
+        const result =await eventCollection.insertOne(events);
+        res.send(result)
+    })
+    app.get('/events/:date',async(req,res)=>{
+        const query=req.params;
+        console.log(query)
+        const result=await eventCollection.find(query).toArray()
+        res.send(result);
+    })
 
     }finally{
 
